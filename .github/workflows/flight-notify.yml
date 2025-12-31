@@ -1,4 +1,4 @@
-name: Flight Notify
+name: Flight Notif
 
 on:
   workflow_dispatch:
