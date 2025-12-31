@@ -35,7 +35,7 @@ async function sendTelegramMessage(text) {
     body: JSON.stringify({
       chat_id: chatId,
       text,
-      disable_web_page_preview: true,
+      parse_mode: "Markdown"
     }),
   });
 
@@ -44,22 +44,32 @@ async function sendTelegramMessage(text) {
 
 function formatSummary(data) {
   const states = Array.isArray(data.states) ? data.states : [];
-  const time = data.time ? new Date(data.time * 1000).toISOString() : new Date().toISOString();
+  const timeUTC = data.time ? new Date(data.time * 1000) : new Date();
 
-  // Format state OpenSky: array; callsign berada di index 1, origin_country index 2 (lihat docs OpenSky)
-  const sample = states
-    .slice(0, 8)
+  const timeLocal = timeUTC.toLocaleString("id-ID", {
+    timeZone: "Asia/Makassar",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  const callsigns = states
     .map((s) => String(s?.[1] ?? "").trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, 5);
 
-  const lines = [
-    `✈️ OpenSky (Indonesia bbox)`,
-    `Time: ${time}`,
-    `Tracked aircraft: ${states.length}`,
-    sample.length ? `Sample callsigns: ${sample.join(", ")}` : `Sample callsigns: (none)`,
-  ];
-
-  return lines.join("\n");
+  return [
+    "✈️ *Laporan Lalu Lintas Udara (Indonesia)*",
+    "",
+    `🕒 *Waktu:* ${timeLocal}`,
+    `🛫 *Pesawat terdeteksi:* ${states.length}`,
+    "",
+    callsigns.length
+      ? "📋 *Contoh penerbangan:*\n" + callsigns.map(c => `• ${c}`).join("\n")
+      : "_Tidak ada data callsign_"
+  ].join("\n");
 }
 
 async function main() {
