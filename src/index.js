@@ -2,7 +2,7 @@ const OPENSKY_URL = "https://opensky-network.org/api/states/all";
 
 // Syamsudin Noor (WAOO / BDJ) ~ 3°26'32"S, 114°45'45"E
 const AIRPORT = { name: "Syamsudin Noor (BDJ/WAOO)", lat: -3.4422, lon: 114.7625 }; // :contentReference[oaicite:3]{index=3}
-const RADIUS_KM = 30; // ubah sesuai kebutuhan (mis. 20/30/50 km)
+const RADIUS_KM = 50; // ubah sesuai kebutuhan (mis. 20/30/50 km)
 
 function env(name) {
   const v = process.env[name];
