@@ -4,8 +4,8 @@ const OPENSKY_URL = "https://opensky-network.org/api/states/all";
 // Bounding box kira-kira Indonesia (silakan ubah)
 const BBOX = {
   lamin: -11.5,
-  lomin: 94.0,
-  lamax: 6.5,
+  lomin: 95.0,
+  lamax: 6.0,
   lomax: 141.0,
 };
 
